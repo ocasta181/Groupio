@@ -1,3 +1,19 @@
+# group.io
+# MIT Big Data Hackathon
+# group.io is a group recommendation system
+# We are:
+# 		Andrin Foster
+# 		Benjamin Chen
+# 		Catherine Liu
+# 		Demetri Sampas 
+# 		Prakash Manghwani
+# 		Jonathan Barronville
+#
+# 
+# Code is borrowed heaily from http://edc.tversu.ru/elib/inf/0251.pdf
+
+
+
 import math
 
 
