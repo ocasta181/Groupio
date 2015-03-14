@@ -14,10 +14,9 @@
 
 
 from math import sqrt
+from YelpDict import yelpDict
 import json
 
-
-yelpDict = json.load(open('YelpDict.json'))
 
 # A dictionary of movie critics and their ratings of a small
 # set of movies
