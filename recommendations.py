@@ -254,9 +254,23 @@ def getGroupRecommendations(group, dictionary):
 
 
 
-rec = getGroupRecommendations(group2, yelpDict)
-output = getHighestRecommendation(rec)
-print output
+### Get A Final Answer with Yelp ####################
+#rec = getGroupRecommendations(group2, yelpDict)		#
+#output = getHighestRecommendation(rec)				#
+#print output										#
+#####################################################
+
+### Get A Final Answer with Yelp ####################
+rec = getGroupRecommendations(group1, critics)		#
+output = getHighestRecommendation(rec)				#
+print output										#
+#####################################################
+
+
+
+
+
+
 
 
 
