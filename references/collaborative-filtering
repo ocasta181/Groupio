@@ -1,0 +1,11 @@
+Collaborative filtering is one way to approach the problem. This has been(or still is)
+used at Amazon and many other systems including first version of Google News back in 2007.
+
+Amazon Paper : http://www.cs.umd.edu/~samir/498/Amazon-Recommendations.pdf
+Google News   : http://www2007.org/papers/paper570.pdf
+Summary :  Edwin Chen's answer https://www.quora.com/How-does-Amazons-collaborative-filtering-recommendation-engine-work
+Example(with code) : http://aimotion.blogspot.com/2009/11/collaborative-filtering-implementation.html
+Tool : Apache Mahout (http://mahout.apache.org/users/recommender/recommender-documentation.html)
+
+Other References:
+A great class on Recommender systems : https://www.coursera.org/learn/recommender-systems/outline
