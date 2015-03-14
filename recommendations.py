@@ -12,9 +12,12 @@
 # 
 # Code is borrowed heaily from http://edc.tversu.ru/elib/inf/0251.pdf
 
-from YelpDictBig import yelpDict
-from math import sqrt
 
+from math import sqrt
+import json
+
+
+yelpDict = json.load(open('YelpDict.json'))
 
 # A dictionary of movie critics and their ratings of a small
 # set of movies
@@ -137,15 +140,15 @@ def calculateSimilarItems(prefs,n=10):
 		c+=1
 		if c%100==0: print "%d / %d" % (c,len(itemPrefs))
 		# Find the most similar items to this one
-		scores=topMatches(itemPrefs,item,n=n,similarity=sim_distance)
+		scores=topMatches(itemPrefs,item,n=n,similarity=sim_pearson)
 		result[item]=scores
 
 	return result
 
-def groupSimilarItems(group):
+def groupSimilarItems(group, dictionary):
 	weightedRec={}
 	for person in group:
-		for score, movieName in getRecommendedItems(yelpDict,itemsim,person):
+		for score, movieName in getRecommendedItems(dictionary,itemsim,person):
 			if movieName in weightedRec.keys():
 				weightedRec[movieName] += score 
 			else:
@@ -162,15 +165,96 @@ def getHighestRecommendation(recommendations):
 			index = rec
 	return index
 
-itemsim = calculateSimilarItems(yelpDict)
-print itemsim
+
+
+# Gets recommendations for a person by using a weighted average
+# of every other user's rankings
+def getRecommendations(prefs,person,similarity=sim_pearson):
+	totals={}
+	simSums={}
+	for other in prefs:
+		# don't compare me to myself
+		if other==person: continue
+		sim=similarity(prefs,person,other)
+
+		# ignore scores of zero or lower
+		if sim<=0: continue
+		for item in prefs[other]:
+			# only score movies I haven't seen yet
+			if item not in prefs[person] or prefs[person][item]==0:
+				# Similarity * Score
+				totals.setdefault(item,0)
+				totals[item]+=prefs[other][item]*sim
+				# Sum of similarities
+				simSums.setdefault(item,0)
+				simSums[item]+=sim
+
+
+
+	# Create the normalized list
+	rankings=[(total/simSums[item],item) for item,total in totals.items( )]
+
+	# Return the sorted list
+	rankings.sort( )
+	rankings.reverse()
+	return rankings
+
+
+# Gets recommendations for a person by using a weighted average
+# of every other user's rankings
+def getRecommendations(prefs,person,similarity=sim_pearson):
+	totals={}
+	simSums={}
+	for other in prefs:
+		# don't compare me to myself
+		if other==person: continue
+		sim=similarity(prefs,person,other)
+
+		# ignore scores of zero or lower
+		if sim<=0: continue
+		for item in prefs[other]:
+			# only score movies I haven't seen yet
+			#if item not in prefs[person] or prefs[person][item]==0:
+			# Similarity * Score
+			totals.setdefault(item,0)
+			totals[item]+=prefs[other][item]*sim
+			# Sum of similarities
+			simSums.setdefault(item,0)
+			simSums[item]+=sim
+
+
+
+	# Create the normalized list
+	rankings=[(total/simSums[item],item) for item,total in totals.items( )]
+
+	# Return the sorted list
+	rankings.sort( )
+	rankings.reverse()
+	return rankings
+
+
+def getGroupRecommendations(group, dictionary):
+	weightedRec={}
+	for person in group:
+		for score, movieName in getRecommendations(dictionary, person):
+			if movieName in weightedRec.keys():
+				weightedRec[movieName] += score 
+			else:
+				weightedRec[movieName] = score
+	
+	return weightedRec
+
+
+
+##itemsim = calculateSimilarItems(critics)
+##print itemsim
 #similarItems = groupSimilarItems(group2)
 
 #output = getHighestRecommendation(similarItems)
 
 
 
-rec = getGroupRecommendations(group1)
+rec = getGroupRecommendations(group2, yelpDict)
 output = getHighestRecommendation(rec)
 print output
 
