@@ -41,7 +41,7 @@ critics={'Lisa Rose': {'Lady in the Water': 2, 'Snakes on a Plane': 3,
 group1 = {'Lisa Rose', 'Mick LaSalle', 'Toby'}
 
 
-group2  = {"J-LDiDOvAp5PiE5PZx56Bg", "HeIv2xpid8OSu_YqFs8inw", "8Uq8gSxmvm6g5VBlEuSEUQ"}
+group2  = {"LT3L8-tthzD0IakgXm81pw", "N6VcdNl2x461HTwaDe6EHg", "E1bI83_AbOLgehzf1XOuhA", "ZfDBU11iIuYxqpVe_Hnqew"}
 
 
 # Returns the Pearson correlation coefficient for p1 and p2
@@ -262,22 +262,26 @@ def getGroupRecommendations(group, dictionary):
 
 ### Get A Final Answer with Yelp ####################
 rec = getGroupRecommendations(group2, yelpDict)		#
+print rec
 output = getHighestRecommendation(rec)				#
 print output										#
 #####################################################
 
-### Get A Final Answer with Yelp ####################
-# rec = getGroupRecommendations(group1, critics)		#
-# output = getHighestRecommendation(rec)				#
-# print output										#
+
+### Get A Final Answer with Sample ##################
+#rec = getGroupRecommendations(group1, critics)		#
+#output = getHighestRecommendation(rec)				#
+#print output										#
 #####################################################
 
 
+### Get individual suggestion Sample ################
+#rec = getRecommendations(critics,'Toby')			#
+#print rec											#									#
+#####################################################
 
 
-
-
-
-
-
-
+### Get individual suggestion Yelp ##########################
+#rec = getRecommendations(yelpDict,"LT3L8-tthzD0IakgXm81pw")	#
+#print rec											#
+#############################################################
