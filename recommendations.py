@@ -39,21 +39,7 @@ group1 = {'Lisa Rose', 'Mick LaSalle', 'Toby'}
 
 
 group2  = {"J-LDiDOvAp5PiE5PZx56Bg", "HeIv2xpid8OSu_YqFs8inw", "8Uq8gSxmvm6g5VBlEuSEUQ"}
-# Returns a distance-based similarity score for person1 and person2
-def sim_distance(prefs,person1,person2):
-	# Get the list of shared_items
-	si={}
-	for item in prefs[person1]:
-		if item in prefs[person2]:
-			si[item]=1
 
-	# if they have no ratings in common, return 0
-	if len(si)==0: return 0
-
-	# Add up the squares of all the differences
-	sum_of_squares=sum([pow(prefs[person1][item]-prefs[person2][item],2) for item in prefs[person1] if item in prefs[person2]])
-
-	return 1/(1+sum_of_squares)
 
 # Returns the Pearson correlation coefficient for p1 and p2
 def sim_pearson(prefs,p1,p2):
@@ -107,89 +93,6 @@ def topMatches(prefs,person,n=5,similarity=sim_pearson):
 	scores.sort( )
 	scores.reverse( )
 	return scores[0:n]
-
-
-# Gets recommendations for a person by using a weighted average
-# of every other user's rankings
-def getRecommendations(prefs,person,similarity=sim_pearson):
-	totals={}
-	simSums={}
-	for other in prefs:
-		# don't compare me to myself
-		if other==person: continue
-		sim=similarity(prefs,person,other)
-
-		# ignore scores of zero or lower
-		if sim<=0: continue
-		for item in prefs[other]:
-			# only score movies I haven't seen yet
-			if item not in prefs[person] or prefs[person][item]==0:
-				# Similarity * Score
-				totals.setdefault(item,0)
-				totals[item]+=prefs[other][item]*sim
-				# Sum of similarities
-				simSums.setdefault(item,0)
-				simSums[item]+=sim
-
-
-
-	# Create the normalized list
-	rankings=[(total/simSums[item],item) for item,total in totals.items( )]
-
-	# Return the sorted list
-	rankings.sort( )
-	rankings.reverse()
-	return rankings
-
-
-# Gets recommendations for a person by using a weighted average
-# of every other user's rankings
-def getRecommendations(prefs,person,similarity=sim_pearson):
-	totals={}
-	simSums={}
-	for other in prefs:
-		# don't compare me to myself
-		if other==person: continue
-		sim=similarity(prefs,person,other)
-
-		# ignore scores of zero or lower
-		if sim<=0: continue
-		for item in prefs[other]:
-			# only score movies I haven't seen yet
-			#if item not in prefs[person] or prefs[person][item]==0:
-			# Similarity * Score
-			totals.setdefault(item,0)
-			totals[item]+=prefs[other][item]*sim
-			# Sum of similarities
-			simSums.setdefault(item,0)
-			simSums[item]+=sim
-
-
-
-	# Create the normalized list
-	rankings=[(total/simSums[item],item) for item,total in totals.items( )]
-
-	# Return the sorted list
-	rankings.sort( )
-	rankings.reverse()
-	return rankings
-
-
-def getGroupRecommendations(group):
-	weightedRec={}
-	for person in group:
-		for score, movieName in getRecommendations(critics, person):
-			if movieName in weightedRec.keys():
-				weightedRec[movieName] += score 
-			else:
-				weightedRec[movieName] = score
-	
-	return weightedRec
-
-
-
-			
-
 
 
 def getRecommendedItems(prefs,itemMatch,user):
@@ -258,17 +161,6 @@ def getHighestRecommendation(recommendations):
 			highest = recommendations[rec]
 			index = rec
 	return index
-
-
-def setToFloat(dict):
-	for person in dict.keys():
-		for item in dict[person].values():
-			print item
-			dict[person] = float(item)
-			print item
-			pass
-
-
 
 itemsim = calculateSimilarItems(yelpDict)
 print itemsim
