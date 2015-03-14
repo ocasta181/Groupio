@@ -6,35 +6,34 @@
 # 		Benjamin Chen
 # 		Catherine Liu
 # 		Demetri Sampas 
-# 		Prakash Manghwani
 # 		Jonathan Barronville
+#		Prakash Manghwani
 #
 # 
 # Code is borrowed heaily from http://edc.tversu.ru/elib/inf/0251.pdf
 
-from YelpDict import yelpDict
+from YelpDictBig import yelpDict
 from math import sqrt
 
 
 # A dictionary of movie critics and their ratings of a small
 # set of movies
-critics={'Lisa Rose': {'Lady in the Water': 2.5, 'Snakes on a Plane': 3.5,
- 'Just My Luck': 3.0, 'Superman Returns': 3.5, 'You, Me and Dupree': 2.5,
- 'The Night Listener': 3.0},
-'Gene Seymour': {'Lady in the Water': 3.0, 'Snakes on a Plane': 3.5,
- 'Just My Luck': 1.5, 'Superman Returns': 5.0, 'The Night Listener': 3.0,
- 'You, Me and Dupree': 3.5},
-'Michael Phillips': {'Lady in the Water': 2.5, 'Snakes on a Plane': 3.0,
- 'Superman Returns': 3.5, 'The Night Listener': 4.0},
-'Claudia Puig': {'Snakes on a Plane': 3.5, 'Just My Luck': 3.0,
- 'The Night Listener': 4.5, 'Superman Returns': 4.0,
- 'You, Me and Dupree': 2.5},
-'Mick LaSalle': {'Lady in the Water': 3.0, 'Snakes on a Plane': 4.0,
- 'Just My Luck': 2.0, 'Superman Returns': 3.0, 'The Night Listener': 3.0,
- 'You, Me and Dupree': 2.0},
-'Jack Matthews': {'Lady in the Water': 3.0, 'Snakes on a Plane': 4.0,
- 'The Night Listener': 3.0, 'Superman Returns': 5.0, 'You, Me and Dupree': 3.5},
-'Toby': {'Snakes on a Plane':4.5,'You, Me and Dupree':1.0,'Superman Returns':4.0}}
+critics={'Lisa Rose': {'Lady in the Water': 2, 'Snakes on a Plane': 3,
+ 'Just My Luck': 3, 'Superman Returns': 3, 'You, Me and Dupree': 2,
+ 'The Night Listener': 3, 'Neverland': 4},
+'Gene Seymour': {'Lady in the Water': 3, 'Snakes on a Plane': 3,
+ 'Just My Luck': 1, 'Superman Returns': 5, 'The Night Listener': 3,
+ 'You, Me and Dupree': 3, 'Up': 5},
+'Michael Phillips': {'Lady in the Water': 2, 'Snakes on a Plane': 3,
+ 'Superman Returns': 3, 'The Night Listener': 4, 'The Grand Budhapest Hotel': 4},
+'Claudia Puig': {'Snakes on a Plane': 3, 'Just My Luck': 3, 'The Night Listener': 4, 
+'Superman Returns': 4, 'You, Me and Dupree': 2, 'Dumb and Dumber': 2},
+'Mick LaSalle': {'Lady in the Water': 3, 'Snakes on a Plane': 4,
+ 'Just My Luck': 2, 'Superman Returns': 3, 'The Night Listener': 3,
+ 'You, Me and Dupree': 2, 'Night At the Museum': 3},
+'Jack Matthews': {'Lady in the Water': 3, 'Snakes on a Plane': 4,
+ 'The Night Listener': 3, 'Superman Returns': 5, 'You, Me and Dupree': 3, 'The Shawshank Redemption': 3},
+'Toby': {'Snakes on a Plane':4,'You, Me and Dupree':1,'Superman Returns':4}}
 
 group1 = {'Lisa Rose', 'Mick LaSalle', 'Toby'}
 
@@ -260,16 +259,27 @@ def getHighestRecommendation(recommendations):
 			index = rec
 	return index
 
+
+def setToFloat(dict):
+	for person in dict.keys():
+		for item in dict[person].values():
+			print item
+			dict[person] = float(item)
+			print item
+			pass
+
+
+
 itemsim = calculateSimilarItems(yelpDict)
 print itemsim
-similarItems = groupSimilarItems(group2)
+#similarItems = groupSimilarItems(group2)
 
-output = getHighestRecommendation(similarItems)
+#output = getHighestRecommendation(similarItems)
 
 
 
-#rec = getGroupRecommendations(group1)
-#output = getHighestRecommendation(rec)
+rec = getGroupRecommendations(group1)
+output = getHighestRecommendation(rec)
 print output
 
 
