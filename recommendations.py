@@ -21,7 +21,7 @@ critics={'Lisa Rose': {'Lady in the Water': 2.5, 'Snakes on a Plane': 3.5,
  'The Night Listener': 3.0, 'Superman Returns': 5.0, 'You, Me and Dupree': 3.5},
 'Toby': {'Snakes on a Plane':4.5,'You, Me and Dupree':1.0,'Superman Returns':4.0}}
 
-
+group1 = {'Lisa Rose', 'Mick LaSalle', 'Toby'}
 
 
 # Returns the Pearson correlation coefficient for p1 and p2
@@ -144,9 +144,9 @@ def getRecommendations(prefs,person,similarity=sim_pearson):
 	return rankings
 
 
-def getGroupRecommendations(prefs):
+def getGroupRecommendations(group):
 	weightedRec={}
-	for person in prefs:
+	for person in group:
 		for score, movieName in getRecommendations(critics, person):
 			if movieName in weightedRec.keys():
 				weightedRec[movieName] += score 
@@ -154,6 +154,9 @@ def getGroupRecommendations(prefs):
 				weightedRec[movieName] = score
 	
 	return weightedRec
+
+
+
 			
 def getHighestRecommendation(recommendations):
 	highest = 0
@@ -165,8 +168,7 @@ def getHighestRecommendation(recommendations):
 	return index
 
 
-
-rec = getGroupRecommendations(critics)
+rec = getGroupRecommendations(group1)
 output = getHighestRecommendation(rec)
 print output
 
