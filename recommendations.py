@@ -18,7 +18,7 @@ import os
 
 with open(
 	os.path.join('.', 'data', 'yelp-filtered.50.json')) as json_dump:
-		yelpDict = json_dump.read()
+		yelpDict = json.loads(json_dump.read())
 
 # A dictionary of movie critics and their ratings of a small
 # set of movies
