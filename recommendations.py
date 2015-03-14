@@ -144,12 +144,31 @@ def getRecommendations(prefs,person,similarity=sim_pearson):
 	return rankings
 
 
+def getGroupRecommendations(prefs):
+	weightedRec={}
+	for person in prefs:
+		for score, movieName in getRecommendations(critics, person):
+			if movieName in weightedRec.keys():
+				weightedRec[movieName] += score 
+			else:
+				weightedRec[movieName] = score
+	
+	return weightedRec
+			
+def getHighestRecommendation(recommendations):
+	highest = 0
+	index = 0
+	for rec in recommendations.keys():
+		if recommendations[rec] > highest:
+			highest = recommendations[rec]
+			index = rec
+	return index
 
-output = getRecommendations(critics,'Toby')
+
+
+rec = getGroupRecommendations(critics)
+output = getHighestRecommendation(rec)
 print output
-
-#output = topMatches(movies,'Superman Returns')
-#print output
 
 
 
