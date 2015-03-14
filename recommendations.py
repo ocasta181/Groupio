@@ -1,3 +1,5 @@
+import math
+
 
 # A dictionary of movie critics and their ratings of a small
 # set of movies
@@ -48,7 +50,7 @@ def sim_pearson(prefs,p1,p2):
 
 	# Calculate Pearson score
 	num=pSum-(sum1*sum2/n)
-	den=sqrt((sum1Sq-pow(sum1,2)/n)*(sum2Sq-pow(sum2,2)/n))
+	den=math.sqrt((sum1Sq-pow(sum1,2)/n)*(sum2Sq-pow(sum2,2)/n))
 	if den==0: return 0
 
 	r=num/den
@@ -62,6 +64,8 @@ def transformPrefs(prefs):
 			result.setdefault(item,{})
 			# Flip item and person
 			result[item][person]=prefs[person][item]
+
+
 	return result
 
 # Returns the best matches for person from the prefs dictionary.
@@ -87,7 +91,6 @@ def getRecommendations(prefs,person,similarity=sim_pearson):
 		# ignore scores of zero or lower
 		if sim<=0: continue
 		for item in prefs[other]:
-
 			# only score movies I haven't seen yet
 			if item not in prefs[person] or prefs[person][item]==0:
 				# Similarity * Score
@@ -96,6 +99,9 @@ def getRecommendations(prefs,person,similarity=sim_pearson):
 				# Sum of similarities
 				simSums.setdefault(item,0)
 				simSums[item]+=sim
+
+
+
 	# Create the normalized list
 	rankings=[(total/simSums[item],item) for item,total in totals.items( )]
 
@@ -105,6 +111,10 @@ def getRecommendations(prefs,person,similarity=sim_pearson):
 	return rankings
 
 
+output = getRecommendations(critics,'Toby')
+print output
+
+output = topMatches
 
 
 
