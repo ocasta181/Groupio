@@ -14,6 +14,7 @@
 
 from math import sqrt
 import json
+import os
 
 with open(
 	os.path.join('.', 'data', 'yelp-filtered.50.json')) as json_dump:
