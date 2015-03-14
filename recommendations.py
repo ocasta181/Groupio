@@ -114,8 +114,6 @@ def getRecommendations(prefs,person,similarity=sim_pearson):
 output = getRecommendations(critics,'Toby')
 print output
 
-output = topMatches
-
 
 
 
