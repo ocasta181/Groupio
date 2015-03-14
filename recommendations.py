@@ -48,8 +48,10 @@ group2  = {"J-LDiDOvAp5PiE5PZx56Bg", "HeIv2xpid8OSu_YqFs8inw", "8Uq8gSxmvm6g5VBl
 def sim_pearson(prefs,p1,p2):
 	# Get the list of mutually rated items
 	si={}
-	for item in prefs[p1]:
-		if item in prefs[p2]: si[item]=1
+
+	if p1 in prefs:
+		for item in prefs[p1]:
+			if item in prefs[p2]: si[item]=1
 
 	# Find the number of elements
 	n=len(si)
@@ -174,11 +176,15 @@ def getRecommendations(prefs,person,similarity=sim_pearson):
 	simSums={}
 	for other in prefs:
 		# don't compare me to myself
-		if other==person: continue
+		if other==person:
+			continue
+
 		sim=similarity(prefs,person,other)
 
 		# ignore scores of zero or lower
-		if sim<=0: continue
+		if sim<=0:
+			continue
+
 		for item in prefs[other]:
 			# only score movies I haven't seen yet
 			if item not in prefs[person] or prefs[person][item]==0:
@@ -255,15 +261,15 @@ def getGroupRecommendations(group, dictionary):
 
 
 ### Get A Final Answer with Yelp ####################
-#rec = getGroupRecommendations(group2, yelpDict)		#
-#output = getHighestRecommendation(rec)				#
-#print output										#
+rec = getGroupRecommendations(group2, yelpDict)		#
+output = getHighestRecommendation(rec)				#
+print output										#
 #####################################################
 
 ### Get A Final Answer with Yelp ####################
-rec = getGroupRecommendations(group1, critics)		#
-output = getHighestRecommendation(rec)				#
-print output										#
+# rec = getGroupRecommendations(group1, critics)		#
+# output = getHighestRecommendation(rec)				#
+# print output										#
 #####################################################
 
 
