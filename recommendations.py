@@ -7,16 +7,17 @@
 # 		Catherine Liu
 # 		Demetri Sampas 
 # 		Jonathan Barronville
-#		Prakash Manghwani
+# 		Prakash Manghwani
 #
 # 
 # Code is borrowed heaily from http://edc.tversu.ru/elib/inf/0251.pdf
 
-
 from math import sqrt
-from YelpDict import yelpDict
 import json
 
+with open(
+	os.path.join('.', 'data', 'yelp-filtered.50.json')) as json_dump:
+		yelpDict = json_dump.read()
 
 # A dictionary of movie critics and their ratings of a small
 # set of movies
